@@ -5,21 +5,22 @@ pipeline {
     tools {
         jdk 'openjdk8'
         maven 'maven363'
-}
-stages {
-    stage('build') {
-        steps {
-            sh"mvn clean test"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh "mvn clean compile"
         }
     }
 }
 post {
     success {
         echo"good job"
-        Failure {
+    }
+    failure {
             echo "improve the skills"
-        }
-        always {
+    }
+    always {
             echo "work hard"
         }
     }
