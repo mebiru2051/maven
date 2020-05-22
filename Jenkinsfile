@@ -1,18 +1,24 @@
-node('docker'){
-    stage('checkout'){
-        echo "Checking the Git code"
-        //git brach: 'docker' credentialsId: 'lokigithubapikey', url: 'https://github.com/lokeshkamalay/simple-java-maven-app.git'
-        checkout scm
+pipeline {
+    agent {
+        label 'maven'
     }
-    stage('Executing Test Cases'){
-        docker.image('lokeshkamalay/batch2:maven').inside(){
-            echo "Execuring Test Cases Started"
-            sh "mvn clean deploy"
+    tools {
+        jdk 'Openjdk8'
+        maven 'Maven363'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh "mvn clean test"
+            }
+        }
+    }
+    post {
+        success {
+            echo "Good job"
         }
     }
 }
-
-
 
 
 /*node('mavenbuilds'){
